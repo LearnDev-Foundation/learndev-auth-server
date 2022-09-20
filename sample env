@@ -1,1 +1,10 @@
-DB_URL = "mongodb connnection uri"
+DB_URL = mongodb connnection uri
+
+SESSION_SECRET = "my jsonwebtoken secret key"
+
+HOST = "email host"
+USER = "email id"
+PASS = "email password"
+SERVICE = "email service"
+
+BASEURL = "server base url"
