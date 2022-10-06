@@ -10,6 +10,7 @@ import dotenv from 'dotenv';
 import session from 'express-session';
 import logger from './src/utils/logger.js';
 import { connectDB } from './src/database/mongoose.js';
+import userRoute from './src/routers/userRoute.js';
 
 const app = express();
 const port = config.port;
@@ -28,6 +29,12 @@ console.log(__dirname);
 // Helmet consist of 13 whooping package all working together to prevent malicious parties
 // from breaking into an application to affecting it's user
 app.use(helmet());
+
+//setting views and view engine
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views')); //this isn't necessary cause nodejs will identify view when using ejs
+
+app.use(express.static(path.join(__dirname, 'public'))); //express.static is used to serve files as static(e.g images)
 
 //Body Parser
 app.use(express.json());
@@ -105,7 +112,28 @@ app.get('/', (req, res) => {
   });
 });
 
-// app.use();
+app.use(userRoute);
+
+//general error handler
+app.use((err, req, res, next) => {
+  logger.info(
+    `Error occured. ErrorCode: ${err.statusCode}, msg: ${err.message}`
+  );
+  err.statusCode = err.statusCode || 500;
+  err.status = err.status || 'error';
+  res.status(err.statusCode).json({
+    status: err.status,
+    message: err.message,
+  });
+});
+
+//unavaliable route error handler
+app.all('*', (req, res, next) => {
+  const err = new Error(`Can't find ${req.originalUrl} on this server!`);
+  err.status = 404;
+  err.statusCode = 404;
+  next(err);
+});
 
 app.listen(port, async () => {
   logger.info(`Environment: ${config.env}`);
