@@ -1,2 +1,3 @@
-# learndev-auth-server
-Authentication server for LearnDev Foundation
+# LearnDev Foundation Authentication API
+
+**This project is still in development**

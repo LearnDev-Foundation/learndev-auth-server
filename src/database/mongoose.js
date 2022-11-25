@@ -9,33 +9,11 @@ dotenv.config();
 //         logger.error(`Environment variable ${name} is missing`);
 //         process.exit(1);
 //     }
-// });
+`// });
 
 export const connectDB = (poolSize = 20, autoIndex = true) => {
   let dbName;
-  let connectionString;
-  switch (process.env.NODE_ENV) {
-    case 'production':
-      dbName = process.env.MONGO_DATABASE;
-      connectionString = `monogodb+srv://${encodeURIComponent(
-        process.env.MONGO_USER
-      )}:${encodeURIComponent(process.env.MONGO_PASS)}@${
-        process.env.MONGO_HOST
-      }/${process.env.MONGO_DATABASE}?retryWrites=true&w=majority`;
-      break;
-    case 'staging':
-      dbName = process.env.MONGO_DATABASE;
-      connectionString = `monogodb+srv://${encodeURIComponent(
-        process.env.MONGO_USER
-      )}:${encodeURIComponent(process.env.MONGO_PASS)}@${
-        process.env.MONGO_HOST
-      }/${process.env.MONGO_DATABASE}?retryWrites=true&w=majority`;
-      break;
-    default:
-      dbName = process.env.MONGO_DATABASE;
-      mongoose.set('debug', true);
-      connectionString = 'mongodb://localhost:27017';
-  }
+  let connectionString = process.env.MONGODB_URI;
 
   const options = {
     useNewUrlParser: true,
