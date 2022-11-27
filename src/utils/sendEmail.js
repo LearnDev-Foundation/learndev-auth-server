@@ -1,5 +1,5 @@
 import nodemailer from 'nodemailer';
-import { transport } from 'pino';
+// import { transport } from 'pino';
 
 const sendEmail = async ({ subject, to, html }) => {
   //setting up nodemailer account
