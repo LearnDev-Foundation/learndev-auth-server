@@ -9,7 +9,7 @@ dotenv.config();
 //         logger.error(`Environment variable ${name} is missing`);
 //         process.exit(1);
 //     }
-`// });
+// });
 
 export const connectDB = (poolSize = 20, autoIndex = true) => {
   let dbName;
